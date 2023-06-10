@@ -17,7 +17,12 @@ public class Load {
     private static Path saveData;
     private static Path QsPath;
 
+<<<<<<< HEAD
     public static void Init(MinecraftServer inServer) {
+=======
+    public static void Init(MinecraftServer inServer)
+    {
+>>>>>>> origin/master
         server = inServer;
         saveData = Path.of(server.getWorldPath(LevelResource.ROOT).toString());
         QsPath = Path.of(Paths.get(server.getServerDirectory().toPath().toString(), "Quick_Save").toString());
@@ -36,7 +41,11 @@ public class Load {
 
         server.getPlayerList().removeAll();
 
+<<<<<<< HEAD
         for (ServerLevel serverlevel : server.getAllLevels()) {
+=======
+        for(ServerLevel serverlevel : server.getAllLevels()) {
+>>>>>>> origin/master
             if (serverlevel != null) {
                 serverlevel.noSave = false;
             }
@@ -52,7 +61,11 @@ public class Load {
             field = pubSever.getDeclaredField("storageSource");
             field.setAccessible(true);
             LevelStorageSource.LevelStorageAccess storage;
+<<<<<<< HEAD
             storage = (LevelStorageSource.LevelStorageAccess) field.get(server);
+=======
+            storage = (LevelStorageSource.LevelStorageAccess)field.get(server);
+>>>>>>> origin/master
             storage.close();
             field.set(server, storage);
         } catch (IOException | IllegalAccessException | NoSuchFieldException e) {
