@@ -1,11 +1,10 @@
-
 plugins {
     id 'net.minecraftforge.gradle' version '5.1.+'
 }
 
 
 group = 'org.kgs'
-version = '1.18.2-1.0-Alpha'
+version = '1.18.2-1.1-Bata'
 
 java {
     archivesBaseName = 'QutickSave'
@@ -49,9 +48,9 @@ minecraft {
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             property 'forge.logging.console.level', 'debug'
 
-                        // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
+            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             property 'forge.enabledGameTestNamespaces', 'QutickSave'
-            
+
             mods {
                 quticksave {
                     source sourceSets.main
@@ -66,8 +65,8 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-                        property 'forge.enabledGameTestNamespaces', 'QutickSave'
-            
+            property 'forge.enabledGameTestNamespaces', 'QutickSave'
+
             mods {
                 quticksave {
                     source sourceSets.main
@@ -134,13 +133,13 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title": "quticksave",
-                            "Specification-Vendor": "KGS様",
-                            "Specification-Version": "1",
-                "Implementation-Title": project.name,
-                "Implementation-Version": project.jar.archiveVersion,
-                            "Implementation-Vendor": "KGS様",
-                            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                "Specification-Title"     : "quticksave",
+                "Specification-Vendor"    : "KGS様",
+                "Specification-Version"   : "1",
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : project.jar.archiveVersion,
+                "Implementation-Vendor"   : "KGS様",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
 }
