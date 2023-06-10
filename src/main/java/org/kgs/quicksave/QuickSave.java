@@ -4,8 +4,10 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
@@ -16,6 +18,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
+import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -30,6 +33,7 @@ public class QuickSave {
 
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
+    public static boolean isQL = false;
 
     public QuickSave() {
         // Register the setup method for modloading
@@ -59,6 +63,16 @@ public class QuickSave {
         public static void onServerStart(final ServerStartedEvent event)
         {
             Save.Init(event.getServer());
+            Load.Init(event.getServer());
+        }
+
+        @SubscribeEvent
+        public static void onServerStopped(final ServerStoppedEvent event)
+        {
+            if(isQL)
+            {
+                Load.mvSave();
+            }
         }
     }
 
@@ -71,6 +85,9 @@ public class QuickSave {
                 Commands.literal("qs")
                         .requires(cs -> cs.hasPermission(0))
                         .executes(cs -> Save.QSave()));
+            dispatcher.register(Commands.literal("ql")
+                        .requires(cs -> cs.hasPermission(0))
+                        .executes(cs -> Load.QLoad()));
         }
     }
 
@@ -81,11 +98,19 @@ public class QuickSave {
                 InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_K,
                 "category.quicksave");
+        public static final KeyMapping QUICKLOAD_KEY = new KeyMapping("key.quicksave.ql",
+                KeyConflictContext.IN_GAME,
+                InputConstants.Type.KEYSYM,
+                GLFW.GLFW_KEY_M,
+                "category.quicksave");
 
         @SubscribeEvent
         public static void onKeyboardInput(InputEvent.KeyInputEvent event) {
             if (QUICKSAVE_KEY.isDown()) {
                 Save.QSave();
+            }
+            if (QUICKLOAD_KEY.isDown()) {
+                Minecraft.getInstance().player.sendMessage(new TextComponent("WIP, Please input /ql"), Minecraft.getInstance().player.getUUID());
             }
         }
     }
@@ -95,6 +120,7 @@ public class QuickSave {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> ClientRegistry.registerKeyBinding(KeyBoardInput.QUICKSAVE_KEY));
+            event.enqueueWork(() -> ClientRegistry.registerKeyBinding(KeyBoardInput.QUICKLOAD_KEY));
         }
     }
 }

@@ -1,10 +1,10 @@
 package org.kgs.quicksave;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.storage.LevelResource;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.CompletableFuture;
@@ -21,25 +21,21 @@ public class Save {
     public static void Init(MinecraftServer inServer)
     {
         server = inServer;
+        saveData = server.getWorldPath(LevelResource.ROOT).toAbsolutePath();
+        QsPath = Paths.get(server.getServerDirectory().toPath().toString(), "Quick_Save");
     }
 
     public static int QSave() {
-        saveData = server.getWorldPath(LevelResource.ROOT).toAbsolutePath();
-        QsPath = Paths.get(saveData.toFile().getPath(),"..", "Quick_Save");
-
         QuickSave.LOGGER.info("Start Quick Save");
+        assert Minecraft.getInstance().player != null;
+        Minecraft.getInstance().player.sendMessage(new TextComponent("Start Quick Save"), Minecraft.getInstance().player.getUUID());
         server.saveEverything(true,true,true);
         currentFuture = CompletableFuture.runAsync(() -> {
-            if (!QsPath.toFile().exists()) {
-                try {
-                    Files.delete(QsPath);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+            FileUtil.deleteFile(QsPath.toFile());
             copyDir(saveData.toFile(), QsPath.toFile());
+            QuickSave.LOGGER.info("Quick Save Done");
+            Minecraft.getInstance().player.sendMessage(new TextComponent("Quick Save Done"), Minecraft.getInstance().player.getUUID());
         });
-        QuickSave.LOGGER.info("Quick Save Done");
 
         return 0;
     }
