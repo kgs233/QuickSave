@@ -1,4 +1,4 @@
-# QuickSave
+# QSave & QLoad
 
 <big>Let QSave & QLoad add to the Minecreaft!</big>
 
