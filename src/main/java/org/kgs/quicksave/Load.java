@@ -13,7 +13,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Load {
-    public static MinecraftServer server;
+    public static String LevelName;
+
+    private static MinecraftServer server;
     private static Path saveData;
     private static Path QsPath;
 
@@ -21,6 +23,7 @@ public class Load {
         server = inServer;
         saveData = Path.of(server.getWorldPath(LevelResource.ROOT).toString());
         QsPath = Path.of(Paths.get(server.getServerDirectory().toPath().toString(), "Quick_Save").toString());
+        LevelName = server.getWorldData().getLevelName();
     }
 
     public static int QLoad() {
@@ -31,7 +34,7 @@ public class Load {
         Minecraft.getInstance().player.sendMessage(new TextComponent("Start Quick Load"), Minecraft.getInstance().player.getUUID());
         QuickSave.isQL = true;
         if (server.getConnection() != null) {
-            server.getConnection().stop();
+            server.getConnection().running = false;
         }
 
         server.getPlayerList().removeAll();

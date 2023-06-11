@@ -57,6 +57,7 @@ public class QuickSave {
         public static void onServerStopped(final ServerStoppedEvent event) {
             if (isQL) {
                 Load.mvSave();
+                Minecraft.getInstance().loadLevel(Load.LevelName);
             }
         }
     }
