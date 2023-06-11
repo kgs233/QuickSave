@@ -44,16 +44,7 @@ public class QuickSave {
     private void setup(final FMLCommonSetupEvent event) {
 
     }
-
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents {
-        @SubscribeEvent
-        public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
-            // Register a new block here
-            LOGGER.info("HELLO from Register Block");
-        }
-    }
-
+    
     @Mod.EventBusSubscriber
     public static class ServerEvent {
         @SubscribeEvent
