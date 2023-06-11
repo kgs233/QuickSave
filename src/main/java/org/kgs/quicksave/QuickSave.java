@@ -8,23 +8,21 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
+
+import java.util.Objects;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("quticksave")
@@ -35,14 +33,8 @@ public class QuickSave {
     public static boolean isQL = false;
 
     public QuickSave() {
-        // Register the setup method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-    }
-
-    private void setup(final FMLCommonSetupEvent event) {
-
     }
     
     @Mod.EventBusSubscriber
@@ -92,7 +84,8 @@ public class QuickSave {
         @SubscribeEvent
         public static void onKeyboardInput(InputEvent.KeyInputEvent event) {
             if (QUICKSAVE_KEY.isDown()) {
-                Save.QSave();
+                assert Minecraft.getInstance().player != null;
+                Objects.requireNonNull(Minecraft.getInstance().player.getServer()).getCommands().performCommand(Minecraft.getInstance().player.getServer().createCommandSourceStack(), "/qs");
             }
             if (QUICKLOAD_KEY.isDown()) {
                 assert Minecraft.getInstance().player != null;
