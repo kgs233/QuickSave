@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraftforge.api.distmarker.Dist;
@@ -45,7 +46,6 @@ public class QuickSave {
         public static void onServerStopped(final ServerStoppedEvent event) {
             if (isQL) {
                 Load.mvSave();
-                Minecraft.getInstance().loadLevel(Load.LevelName);
             }
         }
     }

@@ -7,7 +7,7 @@ group = 'org.kgs'
 version = "${minecraft_version}-${major_version}.${minor_version}.${reversion}_${greak}"
 
 java {
-    archivesBaseName = 'QutickSave'
+    archivesBaseName = 'QSave&QLoad'
     toolchain.languageVersion = JavaLanguageVersion.of(17)
 }
 

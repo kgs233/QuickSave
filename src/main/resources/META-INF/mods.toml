@@ -21,13 +21,13 @@ modId = "quticksave" #mandatory
 # see the associated build.gradle script for how to populate this completely automatically during a build
 version = "${file.jarVersion}" #mandatory
 # A display name for the mod
-displayName = "QutickSave" #mandatory
+displayName = "QSave & QLoad" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification https://docs.minecraftforge.net/en/latest/misc/updatechecker/
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
 displayURL = "https://github.com/kgs233/QuickSave" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-#logoFile="QutickSave.png" #optional
+logoFile="QutickSave.png" #optional
 # A text field displayed in the mod UI
 #credits="Thanks for this example mod goes to Java" #optional
 # A text field displayed in the mod UI

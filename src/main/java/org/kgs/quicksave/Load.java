@@ -1,5 +1,6 @@
 package org.kgs.quicksave;
 
+import net.minecraft.client.Game;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.MinecraftServer;
@@ -12,10 +13,12 @@ import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+//TODO: Add copied auto load world
+
 public class Load {
     public static String LevelName;
 
-    private static MinecraftServer server;
+    public static MinecraftServer server;
     private static Path saveData;
     private static Path QsPath;
 
