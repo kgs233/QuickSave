@@ -1,7 +1,9 @@
 plugins {
-    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
 }
-
 
 group = 'org.kgs'
 version = "${minecraft_version}-${major_version}.${minor_version}.${reversion}_${greak}"
@@ -12,7 +14,7 @@ java {
 }
 
 minecraft {
-    mappings channel: 'official', version: minecraft_version
+    mappings channel: mapping_channel, version: mapping_version
     runs {
         client {
             workingDirectory project.file('run')
@@ -87,18 +89,21 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 }
 
-jar {
+tasks.named('jar', Jar).configure {
     manifest {
         attributes([
-                "Specification-Title"     : "quticksave",
-                "Specification-Vendor"    : "KGS様",
-                "Specification-Version"   : "1",
-                "Implementation-Title"    : project.name,
-                "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "KGS様",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                'Specification-Title'     : mod_id,
+                'Specification-Vendor'    : mod_authors,
+                'Specification-Version'   : '1', // We are version 1 of ourselves
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : project.jar.archiveVersion,
+                'Implementation-Vendor'   : mod_authors,
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
+
+    // This is the preferred method to reobfuscate your jar file
+    finalizedBy 'reobfJar'
 }
 
 jar.finalizedBy('reobfJar')
