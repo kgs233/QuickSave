@@ -1,7 +1,6 @@
 package org.kgs.quicksave;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.storage.LevelResource;
 
@@ -26,13 +25,13 @@ public class Save {
     public static int QSave() {
         QuickSave.LOGGER.info("Start Quick Save");
         assert Minecraft.getInstance().player != null;
-        Minecraft.getInstance().player.sendMessage(new TextComponent("Start Quick Save"), Minecraft.getInstance().player.getUUID());
+        //Minecraft.getInstance().player.sendMessage(new TextComponent("Start Quick Save"), Minecraft.getInstance().player.getUUID());
         server.saveEverything(true, true, true);
         currentFuture = CompletableFuture.runAsync(() -> {
             FileUtil.deleteFile(QsPath.toFile());
             copyDir(saveData.toFile(), QsPath.toFile());
             QuickSave.LOGGER.info("Quick Save Done");
-            Minecraft.getInstance().player.sendMessage(new TextComponent("Quick Save Done"), Minecraft.getInstance().player.getUUID());
+            //Minecraft.getInstance().player.sendMessage(new TextComponent("Quick Save Done"), Minecraft.getInstance().player.getUUID());
         });
 
         return 0;

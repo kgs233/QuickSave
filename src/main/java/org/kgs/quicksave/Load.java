@@ -1,8 +1,6 @@
 package org.kgs.quicksave;
 
-import net.minecraft.client.Game;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.storage.LevelResource;
@@ -34,7 +32,7 @@ public class Load {
 
         QuickSave.LOGGER.info("Start Quick Load");
         assert Minecraft.getInstance().player != null;
-        Minecraft.getInstance().player.sendMessage(new TextComponent("Start Quick Load"), Minecraft.getInstance().player.getUUID());
+        //Minecraft.getInstance().player.sendSystemMessage(new Component("Start Quick Load"), Minecraft.getInstance().player.getUUID());
         QuickSave.isQL = true;
         if (server.getConnection() != null) {
             server.getConnection().running = false;
